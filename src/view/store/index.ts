@@ -106,7 +106,7 @@ export function createStore(): Store {
 			data: stats,
 		},
 		debugMode,
-		activePanel: valoo(Panel.ELEMENTS),
+		activePanel: valoo(Panel.PROFILER),
 		profiler: createProfiler(),
 		notify,
 		nodeList,

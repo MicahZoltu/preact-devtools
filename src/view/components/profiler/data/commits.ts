@@ -28,6 +28,7 @@ export interface CommitData {
  */
 export enum FlamegraphType {
 	FLAMEGRAPH = "FLAMEGRAPH",
+	TIMELINE = "TIMELINE",
 	RANKED = "RANKED",
 }
 
@@ -127,7 +128,7 @@ export function createProfiler(): ProfilerState {
 	});
 
 	// Flamegraph
-	const flamegraphType = valoo(FlamegraphType.FLAMEGRAPH);
+	const flamegraphType = valoo(FlamegraphType.TIMELINE);
 	flamegraphType.on(() => {
 		selectedNodeId.$ = activeCommit.$
 			? getCommitInitalSelectNodeId(activeCommit.$, flamegraphType.$)
