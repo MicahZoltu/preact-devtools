@@ -45,6 +45,8 @@ export function TimelineBar() {
 
 	const onReloadAndProfile = useCallback(() => {
 		store.profiler.isRecording.$ = true;
+		store.profiler.sessionStart.$ = Date.now();
+		store.profiler.sessionEnd.$ = -1;
 		store.emit("reload-and-profile", {
 			captureRenderReasons: store.profiler.captureRenderReasons.$,
 		});
@@ -52,6 +54,8 @@ export function TimelineBar() {
 
 	const onReset = useCallback(() => {
 		resetProfiler(store.profiler);
+		store.profiler.sessionEnd.$ = -1;
+		store.profiler.sessionStart.$ = -1;
 		store.emit("stop-profiling", null);
 	}, [store]);
 
@@ -109,10 +113,13 @@ export function RecordBtn() {
 		isRecording.$ = v;
 
 		if (v) {
+			store.profiler.sessionStart.$ = Date.now();
+			store.profiler.sessionEnd.$ = -1;
 			store.emit("start-profiling", {
 				captureRenderReasons: captureRenderReasons.$,
 			});
 		} else {
+			store.profiler.sessionEnd.$ = Date.now();
 			store.emit("stop-profiling", null);
 		}
 	}, [store]);

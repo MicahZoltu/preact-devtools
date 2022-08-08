@@ -52,6 +52,8 @@ export interface ProfilerState {
 	 * profiler.
 	 */
 	isRecording: Observable<boolean>;
+	sessionStart: Observable<number>;
+	sessionEnd: Observable<number>;
 	commits: Observable<CommitData[]>;
 
 	// Selection
@@ -103,6 +105,10 @@ export function getCommitInitalSelectNodeId(
 export function createProfiler(): ProfilerState {
 	const commits = valoo<CommitData[]>([]);
 	const isSupported = valoo(false);
+
+	// Session
+	const sessionStart = valoo(-1);
+	const sessionEnd = valoo(-1);
 
 	// Render Reasons
 	const supportsRenderReasons = valoo(false);
@@ -195,6 +201,8 @@ export function createProfiler(): ProfilerState {
 	});
 
 	return {
+		sessionStart,
+		sessionEnd,
 		supportsRenderReasons,
 		captureRenderReasons,
 		setRenderReasonCapture,
